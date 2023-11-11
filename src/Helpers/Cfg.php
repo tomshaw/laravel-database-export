@@ -38,6 +38,6 @@ class Cfg
      */
     public static function getBackupDirectory(string $connection): string
     {
-        return Config::get('database-export.disks.backup_directory') . DIRECTORY_SEPARATOR . $connection;
+        return Config::get('database-export.disks.backup_directory').DIRECTORY_SEPARATOR.$connection;
     }
 }

@@ -6,7 +6,6 @@ use Illuminate\Support\Facades\Artisan;
 
 class CommandTest extends TestCase
 {
-
     public function setup(): void
     {
         parent::setUp();

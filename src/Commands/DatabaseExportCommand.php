@@ -31,7 +31,7 @@ class DatabaseExportCommand extends Command
      */
     public function handle()
     {
-        if (!class_exists('ZipArchive')) {
+        if (! class_exists('ZipArchive')) {
             $this->error('The ZipArchive class is not available. Please install the PHP zip extension.');
 
             return 1;
@@ -79,18 +79,18 @@ class DatabaseExportCommand extends Command
         }
 
         $disk = Storage::disk(config('database-export.disks.backup'));
-        $disk->put($directory . DIRECTORY_SEPARATOR . $filename, $output);
+        $disk->put($directory.DIRECTORY_SEPARATOR.$filename, $output);
 
         $zip = new ZipArchive;
 
-        $zipFilePath = $disk->path($directory . DIRECTORY_SEPARATOR . $zipFilename);
+        $zipFilePath = $disk->path($directory.DIRECTORY_SEPARATOR.$zipFilename);
 
-        if (!$zip->open($zipFilePath, ZIPARCHIVE::CREATE | ZipArchive::OVERWRITE)) {
+        if (! $zip->open($zipFilePath, ZIPARCHIVE::CREATE | ZipArchive::OVERWRITE)) {
             $this->error("Unable to open {$zipFilePath}");
 
             return 1;
         }
-        $zip->addFile($disk->path($directory . DIRECTORY_SEPARATOR . $filename), $filename);
+        $zip->addFile($disk->path($directory.DIRECTORY_SEPARATOR.$filename), $filename);
 
         $zip->setCompressionName($filename, ZipArchive::CM_DEFLATE, 6);
         $zip->setCompressionIndex(0, ZipArchive::CM_DEFLATE, 6);
@@ -102,7 +102,7 @@ class DatabaseExportCommand extends Command
 
         $zip->close();
 
-        Storage::disk(config('database-export.disks.backup'))->delete($directory . DIRECTORY_SEPARATOR . $filename);
+        Storage::disk(config('database-export.disks.backup'))->delete($directory.DIRECTORY_SEPARATOR.$filename);
 
         $this->info('The database has been exported successfully.');
 
