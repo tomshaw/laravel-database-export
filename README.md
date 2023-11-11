@@ -13,7 +13,7 @@ A Laravel console command that allows you to export your database. It supports m
 You can install the package via composer:
 
 ```bash
-composer require tomshaw/database-export
+composer require tomshaw/laravel-database-export
 ```
 
 ## Usage
