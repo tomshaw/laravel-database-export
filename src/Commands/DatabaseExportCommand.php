@@ -3,6 +3,7 @@
 namespace TomShaw\DatabaseExport\Commands;
 
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Process;
 use Illuminate\Support\Facades\Storage;
 use TomShaw\DatabaseExport\Helpers\Cfg;
 use ZipArchive;
@@ -31,7 +32,7 @@ class DatabaseExportCommand extends Command
         if (! class_exists('ZipArchive')) {
             $this->error('The ZipArchive class is not available. Please install the PHP zip extension.');
 
-            return 1;
+            return self::FAILURE;
         }
 
         $optionPass = $this->option('password');
@@ -53,30 +54,32 @@ class DatabaseExportCommand extends Command
 
         $isWindows = PHP_OS_FAMILY === 'Windows';
         $pgCommand = $isWindows ?
-            "set PGPASSWORD={$password} && pg_dump -U {$username} --password={$password} -h {$host} -p {$port} {$database}" :
-            "PGPASSWORD={$password} pg_dump -U {$username} -h {$host} -p {$port} {$database}";
+            'set PGPASSWORD='.escapeshellarg($password).' && pg_dump -U '.escapeshellarg($username).' -h '.escapeshellarg($host).' -p '.escapeshellarg($port).' '.escapeshellarg($database) :
+            'PGPASSWORD='.escapeshellarg($password).' pg_dump -U '.escapeshellarg($username).' -h '.escapeshellarg($host).' -p '.escapeshellarg($port).' '.escapeshellarg($database);
 
         $command = match ($connection) {
-            'sqlite' => "sqlite3 {$database} \".dump\"",
-            'mysql' => "mysqldump --user={$username} --password={$password} {$database}",
+            'sqlite' => 'sqlite3 '.escapeshellarg($database).' ".dump"',
+            'mysql' => 'mysqldump --user='.escapeshellarg($username).' --password='.escapeshellarg($password).' -h '.escapeshellarg($host).' -P '.escapeshellarg($port).' '.escapeshellarg($database),
             'pgsql' => $pgCommand,
-            'sqlsrv' => "sqlcmd -S {$host},{$port} -U {$username} -P {$password} -Q \"BACKUP DATABASE [{$database}] TO DISK = N'{$filename}' WITH NOFORMAT, NOINIT, NAME = 'Full Backup of {$database}', SKIP, NOREWIND, NOUNLOAD, STATS = 10\"",
+            'sqlsrv' => 'sqlcmd -S '.escapeshellarg($host.','.$port).' -U '.escapeshellarg($username).' -P '.escapeshellarg($password).' -Q '.escapeshellarg("BACKUP DATABASE [{$database}] TO DISK = N'{$filename}' WITH NOFORMAT, NOINIT, NAME = 'Full Backup of {$database}', SKIP, NOREWIND, NOUNLOAD, STATS = 10"),
             default => null,
         };
 
         if ($command === null) {
             $this->error('Unsupported database connection.');
 
-            return 1;
+            return self::FAILURE;
         }
 
-        $output = shell_exec($command);
+        $result = Process::run($command);
 
-        if ($output === null) {
-            $this->error('Command execution failed.');
+        if ($result->failed()) {
+            $this->error('Command execution failed: '.$result->errorOutput());
 
-            return 1;
+            return self::FAILURE;
         }
+
+        $output = $result->output();
 
         $disk = Storage::disk(config('database-export.disks.backup'));
         $disk->put($directory.DIRECTORY_SEPARATOR.$filename, $output);
@@ -88,24 +91,25 @@ class DatabaseExportCommand extends Command
         if (! $zip->open($zipFilePath, ZIPARCHIVE::CREATE | ZipArchive::OVERWRITE)) {
             $this->error("Unable to open {$zipFilePath}");
 
-            return 1;
+            return self::FAILURE;
         }
         $zip->addFile($disk->path($directory.DIRECTORY_SEPARATOR.$filename), $filename);
 
         $zip->setCompressionName($filename, ZipArchive::CM_DEFLATE, 6);
         $zip->setCompressionIndex(0, ZipArchive::CM_DEFLATE, 6);
 
-        // @todo error
         if ($connection !== 'sqlite') {
             $zip->setEncryptionName($filename, ZipArchive::EM_AES_256, $zipFilePass);
+        } else {
+            $this->warn('SQLite exports do not support zip encryption.');
         }
 
         $zip->close();
 
-        Storage::disk(config('database-export.disks.backup'))->delete($directory.DIRECTORY_SEPARATOR.$filename);
+        $disk->delete($directory.DIRECTORY_SEPARATOR.$filename);
 
         $this->info('The database has been exported successfully.');
 
-        return 0;
+        return self::SUCCESS;
     }
 }
