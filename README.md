@@ -8,6 +8,11 @@
 
 A Laravel console command that allows you to export your database. It supports multiple database connections including MySQL, PostgreSQL, and SQL Server.
 
+## Requirements
+
+- PHP 8.3, 8.4, or 8.5
+- Laravel 12
+
 ## Installation
 
 You can install the package via composer:
