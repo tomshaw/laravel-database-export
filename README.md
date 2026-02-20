@@ -58,6 +58,10 @@ The `Database Export` command does the following:
 
 If you have any issues or questions, please open an issue on the GitHub repository.
 
+## Contributing
+
+Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
+
 ## License
 
-This package is open-source software licensed under the [License](LICENSE) for more information.
+The MIT License (MIT). See [License File](LICENSE) for more information.
