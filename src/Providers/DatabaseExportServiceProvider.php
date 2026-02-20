@@ -1,7 +1,4 @@
 <?php
-/**
- * Class DatabaseExportServiceProvider
- */
 
 namespace TomShaw\DatabaseExport\Providers;
 
@@ -25,10 +22,8 @@ class DatabaseExportServiceProvider extends ServiceProvider
 
     /**
      * Register bindings in the container.
-     *
-     * @return void
      */
-    public function register()
+    public function register(): void
     {
         $this->mergeConfigFrom(__DIR__.'/../../config/config.php', 'database-export');
 

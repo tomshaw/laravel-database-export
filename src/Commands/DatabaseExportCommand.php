@@ -5,7 +5,6 @@ namespace TomShaw\DatabaseExport\Commands;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Storage;
 use TomShaw\DatabaseExport\Helpers\Cfg;
-use TomShaw\DatabaseExport\Helpers\Env;
 use ZipArchive;
 
 class DatabaseExportCommand extends Command
@@ -26,10 +25,8 @@ class DatabaseExportCommand extends Command
 
     /**
      * Execute the console command.
-     *
-     * @return int
      */
-    public function handle()
+    public function handle(): int
     {
         if (! class_exists('ZipArchive')) {
             $this->error('The ZipArchive class is not available. Please install the PHP zip extension.');
@@ -39,20 +36,23 @@ class DatabaseExportCommand extends Command
 
         $optionPass = $this->option('password');
 
-        $database = Env::get('DB_DATABASE');
-        $username = Env::get('DB_USERNAME');
-        $password = Env::get('DB_PASSWORD');
-        $host = Env::get('DB_HOST');
-        $port = Env::get('DB_PORT');
-        $connection = Env::get('DB_CONNECTION');
+        $connection = config('database.default');
+        $dbConfig = config("database.connections.{$connection}");
+
+        $database = $dbConfig['database'] ?? '';
+        $username = $dbConfig['username'] ?? '';
+        $password = $dbConfig['password'] ?? '';
+        $host = $dbConfig['host'] ?? '';
+        $port = $dbConfig['port'] ?? '';
 
         $filename = Cfg::getBackupFilename('sql');
         $zipFilename = Cfg::getBackupFilename('zip');
         $directory = Cfg::getBackupDirectory($connection);
 
-        $zipFilePass = ($optionPass) ? $optionPass : $password;
+        $zipFilePass = $optionPass ?: $password;
 
-        $pgCommand = (Env::isWindows()) ?
+        $isWindows = PHP_OS_FAMILY === 'Windows';
+        $pgCommand = $isWindows ?
             "set PGPASSWORD={$password} && pg_dump -U {$username} --password={$password} -h {$host} -p {$port} {$database}" :
             "PGPASSWORD={$password} pg_dump -U {$username} -h {$host} -p {$port} {$database}";
 
