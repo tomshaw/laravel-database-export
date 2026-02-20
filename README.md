@@ -6,7 +6,7 @@
 ![stars](https://img.shields.io/github/stars/tomshaw/laravel-database-export?style=flat&logo=appveyor)
 [![GitHub license](https://img.shields.io/github/license/tomshaw/laravel-database-export)](https://github.com/tomshaw/laravel-database-export/blob/master/LICENSE)
 
-A Laravel console command that allows you to export your database. It supports multiple database connections including MySQL, PostgreSQL, and SQL Server.
+A Laravel database export console command. Supports MySQL, PostgreSQL and SQL Server.
 
 ## Requirements
 
