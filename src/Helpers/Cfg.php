@@ -17,7 +17,7 @@ class Cfg
      *
      * This method generates a backup filename using the configured filename and the current timestamp.
      *
-     * @param  string  $format The format of the backup file. Default is "sql".
+     * @param  string  $format  The format of the backup file. Default is "sql".
      * @return string The backup filename.
      */
     public static function getBackupFilename(string $format = 'sql'): string
@@ -33,7 +33,7 @@ class Cfg
      *
      * This method retrieves the backup directory for a specific database connection.
      *
-     * @param  string  $connection The name of the database connection.
+     * @param  string  $connection  The name of the database connection.
      * @return string The backup directory.
      */
     public static function getBackupDirectory(string $connection): string
