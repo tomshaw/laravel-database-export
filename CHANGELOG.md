@@ -2,6 +2,13 @@
 
 All notable changes to `google-api` will be documented in this file
 
+## [0.5.0](https://github.com/tomshaw/laravel-database-export/compare/v0.4.0...v0.5.0) (2026-04-04)
+
+
+### Features
+
+* apply pint code style fixes ([a9d6f1c](https://github.com/tomshaw/laravel-database-export/commit/a9d6f1cf2dcf9121cda635518f9089fe0fc984bb))
+
 ## [0.4.0](https://github.com/tomshaw/laravel-database-export/compare/v0.3.0...v0.4.0) (2026-04-04)
 
 
