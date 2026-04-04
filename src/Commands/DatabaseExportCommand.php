@@ -88,7 +88,7 @@ class DatabaseExportCommand extends Command
 
         $zipFilePath = $disk->path($directory.DIRECTORY_SEPARATOR.$zipFilename);
 
-        if (! $zip->open($zipFilePath, ZIPARCHIVE::CREATE | ZipArchive::OVERWRITE)) {
+        if (! $zip->open($zipFilePath, ZipArchive::CREATE | ZipArchive::OVERWRITE)) {
             $this->error("Unable to open {$zipFilePath}");
 
             return self::FAILURE;
