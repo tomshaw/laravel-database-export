@@ -2,6 +2,15 @@
 
 All notable changes to `google-api` will be documented in this file
 
+## [0.4.0](https://github.com/tomshaw/laravel-database-export/compare/v0.3.0...v0.4.0) (2026-04-04)
+
+
+### Features
+
+* apply pint code style fixes and update linting workflow ([db90919](https://github.com/tomshaw/laravel-database-export/commit/db909196537eb7ae516c31000d0a5af590fb2e8a))
+* fix pint workflow to use project config and revert incorrect style changes ([8ee1d09](https://github.com/tomshaw/laravel-database-export/commit/8ee1d091ac21a415477389fb6bee08331c339892))
+* use project pint version in CI instead of external action ([7aad13a](https://github.com/tomshaw/laravel-database-export/commit/7aad13a62cf021372dfb39683315c8ad62980d89))
+
 ## [0.3.0](https://github.com/tomshaw/laravel-database-export/compare/v0.2.1...v0.3.0) (2026-04-04)
 
 
