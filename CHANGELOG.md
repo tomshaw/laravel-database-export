@@ -2,6 +2,13 @@
 
 All notable changes to `google-api` will be documented in this file
 
+## [0.3.0](https://github.com/tomshaw/laravel-database-export/compare/v0.2.1...v0.3.0) (2026-04-04)
+
+
+### Features
+
+* standardize CI workflows and update dependencies for Laravel 13 ([4d7a5d7](https://github.com/tomshaw/laravel-database-export/commit/4d7a5d721bd026fdafb51fbc0165b4d03ca2214e))
+
 ## [0.2.1](https://github.com/tomshaw/laravel-database-export/compare/v0.2.0...v0.2.1) (2026-02-20)
 
 
