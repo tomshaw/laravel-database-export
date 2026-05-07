@@ -2,6 +2,14 @@
 
 All notable changes to `google-api` will be documented in this file
 
+## [0.6.0](https://github.com/tomshaw/laravel-database-export/compare/v0.5.0...v0.6.0) (2026-05-07)
+
+
+### Features
+
+* 🚀 upgrade to Laravel 13 and PHP 8.5 ([463faa0](https://github.com/tomshaw/laravel-database-export/commit/463faa084e11cce0e1e87befa3d23275c8a9edce))
+* 🚀 upgrade to Laravel 13 and PHP 8.5 ([e662076](https://github.com/tomshaw/laravel-database-export/commit/e662076410af293f4bbeea15ad5e0b6f86d90a65))
+
 ## [0.5.0](https://github.com/tomshaw/laravel-database-export/compare/v0.4.0...v0.5.0) (2026-04-04)
 
 
