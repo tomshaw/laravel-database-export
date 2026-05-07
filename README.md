@@ -10,8 +10,8 @@ A Laravel database export console command. Supports MySQL, PostgreSQL and SQL Se
 
 ## Requirements
 
-- PHP 8.3, 8.4, or 8.5
-- Laravel 12
+- PHP 8.5
+- Laravel 13.0
 
 ## Installation
 
