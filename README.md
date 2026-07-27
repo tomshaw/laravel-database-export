@@ -1,10 +1,9 @@
 # Laravel Database Export 💾
 
-![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/tomshaw/laravel-database-export/run-tests.yml?branch=master&style=flat-square&label=tests)
-![issues](https://img.shields.io/github/issues/tomshaw/laravel-database-export?style=flat&logo=appveyor)
-![forks](https://img.shields.io/github/forks/tomshaw/laravel-database-export?style=flat&logo=appveyor)
-![stars](https://img.shields.io/github/stars/tomshaw/laravel-database-export?style=flat&logo=appveyor)
-[![GitHub license](https://img.shields.io/github/license/tomshaw/laravel-database-export)](https://github.com/tomshaw/laravel-database-export/blob/master/LICENSE)
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/tomshaw/laravel-database-export?style=flat-square)](https://packagist.org/packages/tomshaw/laravel-database-export)
+[![Total Downloads](https://img.shields.io/packagist/dt/tomshaw/laravel-database-export?style=flat-square)](https://packagist.org/packages/tomshaw/laravel-database-export)
+[![Tests](https://img.shields.io/github/actions/workflow/status/tomshaw/laravel-database-export/run-tests.yml?branch=master&style=flat-square&label=tests)](https://github.com/tomshaw/laravel-database-export/actions/workflows/run-tests.yml)
+[![License](https://img.shields.io/github/license/tomshaw/laravel-database-export?style=flat-square)](https://github.com/tomshaw/laravel-database-export/blob/master/LICENSE)
 
 A Laravel console command that exports your database to a compressed, optionally AES-256 encrypted zip archive on any Laravel filesystem disk. Supports SQLite, MySQL, MariaDB, PostgreSQL and SQL Server.
 
@@ -90,9 +89,26 @@ For example, the default MySQL options produce consistent, complete dumps withou
 - SQLite connections have no database password, so their archives are only encrypted when `--password` is provided.
 - SQL Server backups use `BACKUP DATABASE`, which is executed by the database server itself — the server must have access to the local temporary directory, so this is intended for setups where the server runs on the same host.
 
+## Testing
+
+```bash
+composer test
+```
+
+Run static analysis and formatting:
+
+```bash
+composer analyse
+composer format
+```
+
 ## Support
 
 If you have any issues or questions, please open an issue on the GitHub repository.
+
+## Changelog
+
+Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed recently.
 
 ## Contributing
 
