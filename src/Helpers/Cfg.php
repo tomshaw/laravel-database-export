@@ -22,7 +22,7 @@ class Cfg
      */
     public static function getBackupFilename(string $format = 'sql'): string
     {
-        $filename = Config::get('database-export.disks.backup_filename');
+        $filename = Config::string('database-export.disks.backup_filename');
         $timestamp = Carbon::now()->valueOf();
 
         return "{$filename}-{$timestamp}.{$format}";
@@ -38,6 +38,6 @@ class Cfg
      */
     public static function getBackupDirectory(string $connection): string
     {
-        return Config::get('database-export.disks.backup_directory').DIRECTORY_SEPARATOR.$connection;
+        return Config::string('database-export.disks.backup_directory').DIRECTORY_SEPARATOR.$connection;
     }
 }

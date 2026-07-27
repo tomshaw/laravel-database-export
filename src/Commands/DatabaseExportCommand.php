@@ -3,6 +3,7 @@
 namespace TomShaw\DatabaseExport\Commands;
 
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Process;
 use Illuminate\Support\Facades\Storage;
 use TomShaw\DatabaseExport\Helpers\Cfg;
@@ -37,20 +38,20 @@ class DatabaseExportCommand extends Command
 
         $optionPass = $this->option('password');
 
-        $connection = config('database.default');
-        $dbConfig = config("database.connections.{$connection}");
+        $connection = Config::string('database.default');
+        $dbConfig = Config::array("database.connections.{$connection}");
 
-        $database = $dbConfig['database'] ?? '';
-        $username = $dbConfig['username'] ?? '';
-        $password = $dbConfig['password'] ?? '';
-        $host = $dbConfig['host'] ?? '';
-        $port = $dbConfig['port'] ?? '';
+        $database = $this->toString($dbConfig['database'] ?? '');
+        $username = $this->toString($dbConfig['username'] ?? '');
+        $password = $this->toString($dbConfig['password'] ?? '');
+        $host = $this->toString($dbConfig['host'] ?? '');
+        $port = $this->toString($dbConfig['port'] ?? '');
 
         $filename = Cfg::getBackupFilename('sql');
         $zipFilename = Cfg::getBackupFilename('zip');
         $directory = Cfg::getBackupDirectory($connection);
 
-        $zipFilePass = $optionPass ?: $password;
+        $zipFilePass = is_string($optionPass) && $optionPass !== '' ? $optionPass : $password;
 
         $isWindows = PHP_OS_FAMILY === 'Windows';
         $pgCommand = $isWindows ?
@@ -81,7 +82,7 @@ class DatabaseExportCommand extends Command
 
         $output = $result->output();
 
-        $disk = Storage::disk(config('database-export.disks.backup'));
+        $disk = Storage::disk(Config::string('database-export.disks.backup'));
         $disk->put($directory.DIRECTORY_SEPARATOR.$filename, $output);
 
         $zip = new ZipArchive;
@@ -111,5 +112,13 @@ class DatabaseExportCommand extends Command
         $this->info('The database has been exported successfully.');
 
         return self::SUCCESS;
+    }
+
+    /**
+     * Coerce a connection configuration value to a string.
+     */
+    private function toString(mixed $value): string
+    {
+        return is_scalar($value) ? (string) $value : '';
     }
 }
