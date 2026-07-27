@@ -1,1 +1,11 @@
 blank_issues_enabled: false
+contact_links:
+  - name: 📖 Documentation
+    url: https://github.com/tomshaw/laravel-database-export#readme
+    about: Installation, usage, and configuration are covered in the README.
+  - name: 🔒 Report a security vulnerability
+    url: https://github.com/tomshaw/laravel-database-export/security/advisories/new
+    about: Please report security issues privately rather than in a public issue.
+  - name: 🤝 Contributing guide
+    url: https://github.com/tomshaw/laravel-database-export/blob/master/CONTRIBUTING.md
+    about: Read this before opening an issue or pull request.

@@ -1,7 +1,7 @@
 name: Feature Request
-description: Suggest a new feature or capability.
+description: Suggest a new capability, or an improvement to how the export command works today.
 title: "[FEATURE]: "
-labels: ["enhancement", "triage"]
+labels: ["enhancement"]
 assignees: []
 
 body:
@@ -9,8 +9,19 @@ body:
     id: summary
     attributes:
       label: 📌 Summary
-      description: "Short summary of the feature request. This shows in the issue list preview."
-      placeholder: "Add a dark mode toggle in the header."
+      description: "Short summary of the request. This appears in the issue list preview."
+      placeholder: "Support exporting a non-default database connection via a --connection option."
+    validations:
+      required: true
+
+  - type: dropdown
+    id: request_type
+    attributes:
+      label: 🧩 Type of Request
+      description: "Is this something new, or a change to existing behavior?"
+      options:
+        - New capability
+        - Improvement to existing behavior
     validations:
       required: true
 
@@ -18,8 +29,8 @@ body:
     id: problem
     attributes:
       label: ❓ Problem / Use Case
-      description: "What problem does this feature solve?"
-      placeholder: "Users find the bright theme difficult to use at night."
+      description: "What are you trying to do, and what makes it difficult today?"
+      placeholder: "We run multi-tenant apps and need to back up a connection other than database.default."
     validations:
       required: true
 
@@ -27,8 +38,8 @@ body:
     id: proposed_solution
     attributes:
       label: 💡 Proposed Solution
-      description: "Describe how you would like it implemented."
-      placeholder: "Add a toggle button in the navbar to switch between dark and light themes."
+      description: "Describe the behavior you would like. A sample command or config snippet helps."
+      placeholder: "php artisan db:export --connection=tenant_a"
     validations:
       required: true
 
@@ -36,16 +47,24 @@ body:
     id: alternatives
     attributes:
       label: 🔄 Alternatives Considered
-      description: "Have you considered other solutions or workarounds?"
-      placeholder: "Users can use browser plugins, but it's not ideal."
+      description: "Any workarounds you are using, or other approaches you weighed?"
+      placeholder: "Currently we swap config('database.default') at runtime before calling the command."
     validations:
       required: false
+
+  - type: checkboxes
+    id: contribution
+    attributes:
+      label: 🤝 Contribution
+      options:
+        - label: "I am willing to open a pull request for this."
+          required: false
 
   - type: textarea
     id: additional_context
     attributes:
       label: 💬 Additional Context
-      description: "Any other details, screenshots, or references?"
-      placeholder: "Figma designs, competitor apps, etc."
+      description: "Any other details or references?"
+      placeholder: "Add additional context"
     validations:
       required: false

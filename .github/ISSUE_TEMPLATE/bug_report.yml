@@ -1,38 +1,72 @@
 name: Bug Report
-description: Report a bug, crash, or unexpected behavior.
+description: Report a bug, crash, or unexpected behavior in the db:export command.
 title: "[BUG]: "
-labels: ["bug", "triage"]
+labels: ["bug"]
 assignees: []
 
 body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to file a report.
+
+        ⚠️ **Please do not paste real credentials.** This package builds shell commands that
+        contain your database password, so passwords can appear in command output and error
+        messages. Replace any password, host, or username with `REDACTED` before posting.
+
   - type: input
     id: summary
     attributes:
       label: 📌 Summary
-      description: "Brief one-liner describing the bug. This appears in the issue list preview."
-      placeholder: "Login form crashes when submitting invalid credentials."
+      description: "One line describing the bug. This appears in the issue list preview."
+      placeholder: "db:export fails with 'Unsupported database connection' on a custom mysql connection name."
+    validations:
+      required: true
+
+  - type: dropdown
+    id: driver
+    attributes:
+      label: 🗄️ Database Driver
+      description: "Which connection driver were you exporting?"
+      options:
+        - MySQL / MariaDB (mysql)
+        - PostgreSQL (pgsql)
+        - SQL Server (sqlsrv)
+        - SQLite (sqlite)
+        - Other / custom connection name
+    validations:
+      required: true
+
+  - type: dropdown
+    id: os
+    attributes:
+      label: 💻 Operating System
+      description: "The export command differs per platform, so this matters."
+      options:
+        - Linux
+        - macOS
+        - Windows
+        - Docker / container
+        - Other
+    validations:
+      required: true
+
+  - type: input
+    id: versions
+    attributes:
+      label: 🔢 Versions
+      description: "Package, Laravel, and PHP versions."
+      placeholder: "tomshaw/laravel-database-export 0.6.0, Laravel 13.2, PHP 8.5.2"
     validations:
       required: true
 
   - type: textarea
-    id: steps
+    id: command
     attributes:
-      label: 🔁 Steps to Reproduce
-      description: "Clearly describe how to reproduce the issue."
-      placeholder: |
-        1. Go to /login
-        2. Enter invalid credentials
-        3. Click Submit
-        4. See error
-    validations:
-      required: true
-
-  - type: textarea
-    id: actual_behavior
-    attributes:
-      label: ❌ Actual Behavior
-      description: "What happens instead of the expected behavior?"
-      placeholder: "The app returns a 500 server error."
+      label: ▶️ Command Run
+      description: "The exact Artisan command you ran, with any password redacted."
+      placeholder: "php artisan db:export --password=REDACTED"
+      render: shell
     validations:
       required: true
 
@@ -40,25 +74,52 @@ body:
     id: expected_behavior
     attributes:
       label: ✅ Expected Behavior
-      description: "What should happen instead?"
-      placeholder: "It should show a validation error message."
+      description: "What did you expect to happen?"
+      placeholder: "An encrypted zip written to storage/app/exports/mysql."
     validations:
       required: true
 
   - type: textarea
-    id: logs
+    id: actual_behavior
     attributes:
-      label: 📄 Logs / Screenshots
-      description: "Add error logs, screenshots, or videos if possible."
-      placeholder: "Paste logs or screenshots here."
+      label: ❌ Actual Behavior
+      description: "What happened instead? Include the full command output or stack trace, with credentials redacted."
+      placeholder: "Command execution failed: mysqldump: command not found"
+      render: shell
+    validations:
+      required: true
+
+  - type: textarea
+    id: configuration
+    attributes:
+      label: ⚙️ Configuration
+      description: "Relevant values from your published config or .env, with credentials redacted."
+      placeholder: |
+        BACKUP_DISK=local
+        BACKUP_FILENAME=company-name
+        BACKUP_DIRECTORY=exports
+      render: dotenv
     validations:
       required: false
 
-  - type: input
-    id: environment
+  - type: checkboxes
+    id: checks
     attributes:
-      label: 🌐 Environment
-      description: "OS, browser, app version, DB version, etc."
-      placeholder: "Windows 11, Chrome 125, Laravel v10.30"
+      label: 🔍 Pre-flight Checks
+      description: "These cover the most common causes of export failures."
+      options:
+        - label: "The CLI tool for my driver (`mysqldump`, `pg_dump`, `sqlite3`, or `sqlcmd`) is installed and on the PATH of the user running the command."
+          required: false
+        - label: "PHP's zip extension is enabled (`php -m | grep zip`)."
+          required: false
+        - label: "I have redacted all passwords and credentials from this report."
+          required: true
+
+  - type: textarea
+    id: additional_context
+    attributes:
+      label: 💬 Additional Context
+      description: "Anything else that might help — filesystem disk driver, permissions, CI environment, etc."
+      placeholder: "Exporting to an S3 disk from a GitHub Actions runner."
     validations:
       required: false

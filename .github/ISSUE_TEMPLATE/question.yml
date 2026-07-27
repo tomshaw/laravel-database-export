@@ -1,16 +1,21 @@
 name: Question / Help
-description: Ask a question or get clarification about the project.
+description: Ask about usage, configuration, or something the README does not cover.
 title: "[QUESTION]: "
-labels: ["question", "triage"]
+labels: ["question"]
 assignees: []
 
 body:
+  - type: markdown
+    attributes:
+      value: |
+        ⚠️ Please redact passwords and hostnames from anything you paste here.
+
   - type: input
     id: summary
     attributes:
       label: 📌 Summary
       description: "Short summary of your question. This appears in the issue list preview."
-      placeholder: "How to configure the API client for custom domains?"
+      placeholder: "How do I write exports to an S3 disk instead of local storage?"
     validations:
       required: true
 
@@ -18,8 +23,8 @@ body:
     id: question_details
     attributes:
       label: ❓ Details
-      description: "Describe your question, what you’re trying to do, and where you’re stuck."
-      placeholder: "I’m trying to connect to the API with a custom domain, but getting a 403 error."
+      description: "What are you trying to do, and where are you stuck?"
+      placeholder: "I set BACKUP_DISK=s3 but the zip still lands in storage/app."
     validations:
       required: true
 
@@ -27,8 +32,17 @@ body:
     id: tried
     attributes:
       label: 🛠️ What have you tried?
-      description: "List any docs, code, or troubleshooting you’ve done so far."
-      placeholder: "Checked the README, tried setting the API_BASE_URL variable, etc."
+      description: "Config you have set, docs you have read, and anything you have already ruled out."
+      placeholder: "Read the Configuration section of the README, published the config, cleared the config cache."
+    validations:
+      required: false
+
+  - type: input
+    id: versions
+    attributes:
+      label: 🔢 Versions
+      description: "Package, Laravel, and PHP versions, if relevant."
+      placeholder: "tomshaw/laravel-database-export 0.6.0, Laravel 13.2, PHP 8.5.2"
     validations:
       required: false
 
@@ -36,7 +50,7 @@ body:
     id: additional_context
     attributes:
       label: 💬 Additional Context
-      description: "Any other information, screenshots, or logs?"
+      description: "Any other information, config, or output — credentials redacted."
       placeholder: "Add additional context"
     validations:
       required: false
