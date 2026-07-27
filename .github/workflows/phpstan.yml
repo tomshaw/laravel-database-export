@@ -3,6 +3,8 @@ name: PHPStan
 on:
   workflow_dispatch:
   push:
+    branches:
+      - master
     paths:
       - '**.php'
       - 'phpstan.neon.dist'
@@ -12,6 +14,13 @@ on:
       - '**.php'
       - 'phpstan.neon.dist'
       - 'phpstan-baseline.neon'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref || github.ref }}
+  cancel-in-progress: true
 
 jobs:
   phpstan:

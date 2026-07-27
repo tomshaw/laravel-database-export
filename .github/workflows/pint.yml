@@ -3,11 +3,22 @@ name: Code Linting
 on:
   workflow_dispatch:
   push:
+    branches:
+      - master
     paths:
       - '**.php'
+      - 'pint.json'
   pull_request:
     paths:
       - '**.php'
+      - 'pint.json'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref || github.ref }}
+  cancel-in-progress: true
 
 jobs:
   php-code-linting:
@@ -16,8 +27,6 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v5
-        with:
-          ref: ${{ github.head_ref }}
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
@@ -25,8 +34,8 @@ jobs:
           php-version: '8.5'
           coverage: none
 
-      - name: Install dependencies
-        run: composer install --no-interaction --prefer-dist
+      - name: Install composer dependencies
+        uses: ramsey/composer-install@v4
 
       - name: Run Pint
         run: vendor/bin/pint --test
