@@ -16,7 +16,13 @@ class DatabaseExportServiceProvider extends ServiceProvider
     public function boot(): void
     {
         if ($this->app->runningInConsole()) {
-            $this->publishes([__DIR__.'/../../config/config.php' => config_path('database-export.php')], 'config');
+            $this->publishes([
+                __DIR__.'/../../config/database-export.php' => config_path('database-export.php'),
+            ], 'database-export-config');
+
+            $this->commands([
+                DatabaseExportCommand::class,
+            ]);
         }
     }
 
@@ -25,10 +31,6 @@ class DatabaseExportServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        $this->mergeConfigFrom(__DIR__.'/../../config/config.php', 'database-export');
-
-        $this->commands([
-            DatabaseExportCommand::class,
-        ]);
+        $this->mergeConfigFrom(__DIR__.'/../../config/database-export.php', 'database-export');
     }
 }
