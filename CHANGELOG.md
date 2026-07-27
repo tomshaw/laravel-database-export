@@ -2,6 +2,19 @@
 
 All notable changes to `google-api` will be documented in this file
 
+## [0.6.1](https://github.com/tomshaw/laravel-database-export/compare/v0.6.0...v0.6.1) (2026-07-27)
+
+
+### Miscellaneous Chores
+
+* add .claude/settings.local.json to .gitignore ([ca44781](https://github.com/tomshaw/laravel-database-export/commit/ca4478198aad35c12d85610e33f4c8385a2884f1))
+* enhance database export command with encryption, connection options, and improved configuration ([e5cbc93](https://github.com/tomshaw/laravel-database-export/commit/e5cbc937401b18c09d8cb510f9dfa997f933434b))
+* remove outdated issue templates for documentation, general issues, and improvements ([5f44ebd](https://github.com/tomshaw/laravel-database-export/commit/5f44ebd9cacb364e4066ac9b50c34e285d9a0d57))
+* update issue templates for clarity and add pull request template ([e8c6bd6](https://github.com/tomshaw/laravel-database-export/commit/e8c6bd6148b2b66a77cf217f298c85747abb9e5a))
+* update PHPStan workflow to include pull request paths ([fc6a397](https://github.com/tomshaw/laravel-database-export/commit/fc6a397c28812886ee7651c15251266e900dd157))
+* update README with testing instructions and changelog section ([185f0ba](https://github.com/tomshaw/laravel-database-export/commit/185f0ba71b246e22c4560d3cfe63b8028d04c31d))
+* update workflow files to include branch specifications and improve caching ([9ce961a](https://github.com/tomshaw/laravel-database-export/commit/9ce961a8c502253d3cbeb1ff572b1a04ca92bf64))
+
 ## [0.6.0](https://github.com/tomshaw/laravel-database-export/compare/v0.5.0...v0.6.0) (2026-05-07)
 
 
